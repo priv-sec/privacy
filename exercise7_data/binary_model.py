@@ -13,15 +13,10 @@ class BinaryNet(nn.Module):
         super().__init__()
         self.fc1 = nn.Linear(3, 64)
         self.fc2 = nn.Linear(64, 1)
-        #self.fc2 = nn.Linear(128, 64)
-        #self.fc3 = nn.Linear(64, 1)
-        #self.s = torch.nn.Softmax(dim=1)
         self.s = torch.nn.Sigmoid()
 
     def forward(self, x):
-        #x = F.relu( self.fc1(x) )
         x = self.fc1(x)
-        #x = F.relu( self.fc2(x) )
         x = self.s( self.fc2(x) )
         return x
 
@@ -71,8 +66,6 @@ def _train(model, device, train_loader, optimizer):
       labels = y.detach().cpu().numpy()
       acc = accuracy(preds.round(), labels)
       top1_acc.append(acc)
-        
-  #print(top1_acc)
     
   top1_avg = np.mean(top1_acc)
   test_loss = np.mean(losses)
